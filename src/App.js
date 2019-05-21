@@ -1,12 +1,15 @@
 import React, {Component} from 'react';
 import './App.css';
 import TodoItem from './component/TodoItem';
+import tick from './img/tick.svg';
 
 class App extends Component {
   constructor() {
     super();
 
     this.state = {
+      newItem: '',
+      currentFilter: ['all', 'active', 'completed'],
       todoItems: [
         {title: "Mua bim bim", isComplete: true}, 
         {title: "Di da bong", isComplete: false}, 
@@ -14,7 +17,9 @@ class App extends Component {
       ]
     };
 
-    this.onItemClicked = this.onItemClicked.bind(this);
+    this.onKeyUp = this.onKeyUp.bind(this);
+
+    this.onChange = this.onChange.bind(this);
   }
 
   onItemClicked(item) {
@@ -35,20 +40,59 @@ class App extends Component {
     }
   }
 
+  onKeyUp(event) {
+    if(event.keyCode === 13) { //enter key
+      let text = event.target.value;
+
+      if(!text || text === '') {
+        return;
+      }
+
+      text = text.trim();
+
+      if(!text) {
+        return;
+      }
+
+      this.setState({
+        newItem: '',
+        todoItems: [
+          {title: text, isComplete: false},
+          ...this.state.todoItems
+        ]
+      })
+    }
+  }
+
+  onChange(event) {
+    this.setState({
+      newItem: event.target.value
+    })
+  }
+
   render() {
-    const {todoItems} = this.state;
+    const {newItem, currentFilter, todoItems} = this.state;
 
     if(todoItems.length) {
       return (
         <div className="App">
-        {
-          todoItems.length > 0 && todoItems.map((item, index) => 
-            <TodoItem 
-              key={index}
-              item={item}
-              onClick={this.onItemClicked(item)} />
-          )
-        }
+          <div className="Header">
+            <img src={tick} width={32} height={32}></img>
+            <input type="text"
+                  placeholder="Add a new item" 
+                  value={newItem}
+                  onChange={this.onChange}
+                  onKeyUp={this.onKeyUp}>
+            </input>
+          </div>
+          {
+            todoItems.length > 0 && todoItems.map((item, index) => 
+              <TodoItem 
+                key={index}
+                item={item}
+                onClick={this.onItemClicked(item)} />
+            )
+          }
         </div>
       );
     }
