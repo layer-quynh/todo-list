@@ -1,5 +1,5 @@
 .App {
-  width: 300px;
+  width: 400px;
   margin-left: auto;
   margin-right: auto;
   border: 1px solid;
@@ -56,3 +56,40 @@
     transform: rotate(360deg);
   }
 }
+
+.App .Footer {
+  padding: 10px 5px;
+  display: flex;
+}
+
+.App .Footer .div {
+  display: inline-block;
+}
+
+.Footer div {
+  padding-left: 40px;
+  padding-top: 15px;
+}
+
+.CurrentFilter {
+  list-style-type: none;
+  display: inline-block;
+  padding: 0 5px;
+  border: #282c34 1px;
+}
+
+.CurrentFilter a {
+  text-decoration: none;
+  color: inherit;
+  border: 1px solid transparent;
+  border-radius: 3px;
+}
+
+.CurrentFilter a:selected {
+  border-color: rgba(175, 47, 47, 0.2);
+}
+
+.CurrentFilter a:hover {
+  color: #282c34;
+}
+

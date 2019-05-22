@@ -70,8 +70,27 @@ class App extends Component {
     })
   }
 
+  onFilterClick(item) {
+    return (event => {
+      if(item === 'all') {
+        return;
+      }
+
+      if(item === 'active') {
+        console.log(this.state.todoItems);
+      }
+    })
+  }
+
   render() {
     const {newItem, currentFilter, todoItems} = this.state;
+
+    let len = 0;
+    for(let item of todoItems) {
+      if(!item.isComplete) {
+        len++;
+      }
+    }
 
     if(todoItems.length) {
       return (
@@ -93,6 +112,19 @@ class App extends Component {
                 onClick={this.onItemClicked(item)} />
             )
           }
+          <div className="Footer">
+            {
+              (len <= 1) ? (<p>{len} item left</p>) : (<p>{len} items left </p>)
+            }
+            <div>
+              {
+                currentFilter.map((item, index) => 
+                  <li className="CurrentFilter" key={index}>
+                    <a href="#" onClick={this.onFilterClick(item)}>{item}</a>
+                  </li>)
+              }
+            </div>
+          </div>
         </div>
       );
     }
